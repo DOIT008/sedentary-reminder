@@ -18,6 +18,7 @@
     "capture": "electron tools/capture.js",
     "launcher": "node tools/build-launcher.js",
     "package": "node tools/build-exe.js",
+    "release": "node tools/publish-release.js",
     "test:package": "node tools/package-guard.js",
     "smoke": "node tools/smoke.js",
     "test:rollover": "node tools/day-rollover-test.cjs",

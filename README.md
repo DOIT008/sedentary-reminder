@@ -66,6 +66,14 @@ npm run package
 [tools/build-exe.js](tools/build-exe.js) 调 electron-builder，同时产出 NSIS 安装版和 portable 单文件，
 默认输出到 `E:\builds\sedentary-reminder`（用 `SR_OUT` 覆盖），Electron 与 nsis/7zip 走 npmmirror 镜像。
 
+```bash
+npm run release
+```
+
+[tools/publish-release.js](tools/publish-release.js) 把两个产物传到当前 tag 的 GitHub Release 附件，
+正文带 SHA-256 校验和（见 [RELEASE-NOTES.md](RELEASE-NOTES.md)）。凭据走 `git credential fill`，
+脚本不读不写任何 token 文件，重复跑会跳过已上传的附件。
+
 ## 目录
 
 ```
