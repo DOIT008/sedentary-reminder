@@ -1,0 +1,18 @@
+Option Explicit
+' 双击启动「久坐提醒」：常驻托盘，默认每 45 分钟提醒一次，间隔可在面板里自定义。
+' 真正的启动逻辑在同目录的 启动久坐提醒.bat 里；这里只负责把它无声地拉起来（不闪黑框）。
+' 本文件由 tools/build-launcher.js 生成，别手改。
+
+Dim fso, sh, appDir, bat, q
+appDir = "__APP_DIR__"
+bat = appDir & "\启动久坐提醒.bat"
+q = Chr(34)
+Set fso = CreateObject("Scripting.FileSystemObject")
+Set sh = CreateObject("WScript.Shell")
+
+If Not fso.FileExists(bat) Then
+  MsgBox "找不到启动脚本：" & vbCrLf & bat & vbCrLf & vbCrLf & "（它必须和这个项目目录待在一起）", vbCritical, "久坐提醒"
+  WScript.Quit 1
+End If
+
+sh.Run q & bat & q, 0, False

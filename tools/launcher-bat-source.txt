@@ -1,0 +1,20 @@
+@echo off
+setlocal
+rem 由 tools/build-launcher.js 生成，别手改；要改逻辑请改 tools/launcher-bat-source.txt。
+
+set "APP_DIR=__APP_DIR__"
+set "EXE=%APP_DIR%\node_modules\electron\dist\electron.exe"
+
+if not exist "%EXE%" (
+  echo [久坐提醒] 找不到 Electron： %EXE%
+  echo            先在项目目录里跑一次 npm install，再双击启动。
+  pause
+  exit /b 1
+)
+
+rem 宿主进程树（比如从 Qoder 里跑）可能带着 ELECTRON_RUN_AS_NODE：只要它存在，
+rem electron.exe 就退化成普通 Node —— 主进程第一行就崩、托盘也不出现，还看不见报错。
+rem cmd 的 set "VAR=" 是真删除，WScript 只能置成空串，所以这段逻辑必须留在 bat 里。
+set "ELECTRON_RUN_AS_NODE="
+
+start "久坐提醒" "%EXE%" "%APP_DIR%"

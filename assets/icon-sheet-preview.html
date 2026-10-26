@@ -1,0 +1,62 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>icon sheet</title>
+<style>
+  html, body { margin: 0; padding: 0; font: 12px/1.5 "Segoe UI", sans-serif; color: #e8edf6; background: #0b0f16; }
+  body { padding: 18px 20px 22px; }
+  h1 { font-size: 13px; font-weight: 600; margin: 0 0 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .55; }
+  .row { display: flex; gap: 18px; margin-bottom: 16px; }
+  .cell { display: flex; flex-direction: column; gap: 6px; }
+  .strip { display: flex; align-items: flex-end; gap: 8px; padding: 8px 10px; border-radius: 10px; }
+  .dark { background: #1b2230; }
+  .light { background: #eef1f7; }
+  .taskbar { background: linear-gradient(#2a3140, #171c26); border-radius: 6px; padding: 5px 10px; display: flex; align-items: center; gap: 7px; }
+  img { display: block; image-rendering: -webkit-optimize-contrast; }
+  .cap { opacity: .5; font-size: 10px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #64748b; }
+</style>
+<h1>Sedentary Reminder · icon sheet</h1>
+
+<div class="row">
+  <div class="cell">
+    <div class="strip dark"><img src="app-512.png" width="150" height="150" /></div>
+    <div class="cap">app-512 · 窗口/任务栏</div>
+  </div>
+  <div class="cell">
+    <div class="strip dark"><img src="app-256.png" width="76" height="76" /><img src="badge-64.png" width="64" height="64" /></div>
+    <div class="cap">app-256 · badge-64</div>
+  </div>
+  <div class="cell">
+    <div class="strip dark">
+      <img src="tray-focus-32.png" width="32" height="32" />
+      <img src="tray-break-32.png" width="32" height="32" />
+      <img src="tray-idle-32.png" width="32" height="32" />
+      <img src="tray-paused-32.png" width="32" height="32" />
+    </div>
+    <div class="cap">状态色 @32</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="cell">
+    <div class="taskbar">
+      <img src="tray-focus-16.png" width="16" height="16" /><span class="dot"></span>
+      <img src="tray-break-16.png" width="16" height="16" /><span class="dot"></span>
+      <img src="tray-idle-16.png" width="16" height="16" /><span class="dot"></span>
+      <img src="tray-paused-16.png" width="16" height="16" />
+    </div>
+    <div class="cap">托盘真实尺寸 @16</div>
+  </div>
+  <div class="cell">
+    <div class="strip light">
+      <img src="tray-focus-16.png" width="16" height="16" /><img src="tray-break-16.png" width="16" height="16" /><img src="tray-idle-16.png" width="16" height="16" /><img src="tray-paused-16.png" width="16" height="16" />
+    </div>
+    <div class="cap">浅色任务栏 @16</div>
+  </div>
+  <div class="cell">
+    <div class="strip dark">
+      <img src="tray-focus-32.png" width="64" height="64" /><img src="tray-break-32.png" width="64" height="64" /><img src="tray-idle-32.png" width="64" height="64" /><img src="tray-paused-32.png" width="64" height="64" />
+    </div>
+    <div class="cap">放大看细节</div>
+  </div>
+</div>

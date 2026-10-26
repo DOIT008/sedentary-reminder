@@ -1,0 +1,31 @@
+{
+  "name": "sedentary-reminder",
+  "productName": "久坐提醒",
+  "version": "1.0.0",
+  "private": true,
+  "description": "每隔一段时间提醒你起身的桌面小助手（Electron）",
+  "author": "DOIT008",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DOIT008/sedentary-reminder.git"
+  },
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "icons": "electron tools/build-icons.js",
+    "test:engine": "node tools/engine-test.cjs",
+    "capture": "electron tools/capture.js",
+    "launcher": "node tools/build-launcher.js",
+    "package": "node tools/build-exe.js",
+    "test:package": "node tools/package-guard.js",
+    "smoke": "node tools/smoke.js",
+    "test:rollover": "node tools/day-rollover-test.cjs",
+    "test:freeze": "node tools/freeze-guard.js",
+    "test:clicks": "node tools/click-guard.js"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^26.18.0"
+  }
+}

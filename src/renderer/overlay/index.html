@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'" />
+    <title>起身活动一下</title>
+    <link rel="stylesheet" href="../shared/tokens.css" />
+    <link rel="stylesheet" href="overlay.css" />
+  </head>
+  <body>
+    <div class="scrim"></div>
+    <div class="aurora"><i></i><i></i><i></i></div>
+
+    <header class="ov__brand" id="brand">
+      <img src="../../../assets/badge-64.png" alt="" width="22" height="22" />
+      <span>久坐提醒</span>
+      <span class="ov__brandSep">·</span>
+      <span class="ov__brandState" id="brandState">休息时间</span>
+    </header>
+
+    <main class="ov">
+      <div class="ov__stage">
+        <div class="orb" id="orb">
+          <span class="orb__halo"></span>
+          <span class="orb__core"></span>
+          <span class="orb__rings"><i></i><i></i></span>
+        </div>
+
+        <svg class="ov__ring" viewBox="0 0 260 260" width="260" height="260">
+          <defs>
+            <linearGradient id="breakGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fcd34d" />
+              <stop offset="0.55" stop-color="#fb923c" />
+              <stop offset="1" stop-color="#f472b6" />
+            </linearGradient>
+            <linearGradient id="doneGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5eead4" />
+              <stop offset="1" stop-color="#818cf8" />
+            </linearGradient>
+          </defs>
+          <circle class="ov__ringTrack" cx="130" cy="130" r="118" />
+          <circle class="ov__ringValue" id="ringValue" cx="130" cy="130" r="118" />
+        </svg>
+
+        <div class="ov__center">
+          <span class="ov__kicker" id="kicker">该起身了</span>
+          <span class="ov__clock num" id="clock">5:00</span>
+          <span class="ov__hint" id="hint">倒计时结束前，先离开椅子</span>
+        </div>
+
+        <svg class="ov__check" id="check" viewBox="0 0 120 120" width="120" height="120">
+          <path d="M32 62 52 82 90 40" fill="none" stroke="url(#doneGradient)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <section class="ov__tip" id="tip">
+        <p class="ov__tipText" id="tipText">站起来，双脚踩实地面</p>
+        <div class="ov__dots" id="tipDots"></div>
+      </section>
+
+      <footer class="ov__actions" id="actions">
+        <button class="ov__done btn btn--primary" id="btnDone"><span class="ic"></span>好的，继续工作</button>
+        <div class="ov__quiet">
+          <button class="btn btn--quiet btn--sm" id="btnSnooze"><span class="ic" data-icon="snooze"></span><span id="snoozeText">稍后 5 分钟</span></button>
+          <button class="btn btn--quiet btn--sm btn--danger" id="btnSkip"><span class="ic" data-icon="skip"></span>跳过本次</button>
+        </div>
+      </footer>
+    </main>
+
+    <p class="ov__meta" id="meta"></p>
+
+    <script src="../shared/icons.js"></script>
+    <script src="../shared/format.js"></script>
+    <script src="../shared/audio.js"></script>
+    <script src="overlay.js"></script>
+  </body>
+</html>

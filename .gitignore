@@ -1,0 +1,8 @@
+node_modules/
+tools/out/
+*.log
+.DS_Store
+
+# tools/build-launcher.js 生成的本机启动器，里面写死了这台机器的绝对路径
+启动久坐提醒.bat
+启动久坐提醒.vbs

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>久坐提醒</title>
+    <link rel="stylesheet" href="../shared/tokens.css" />
+    <link rel="stylesheet" href="panel.css" />
+  </head>
+  <body data-phase="focus">
+    <div class="ambient"><i></i><i></i><i></i></div>
+
+    <header class="bar">
+      <div class="bar__brand">
+        <img class="bar__logo" src="../../../assets/badge-64.png" alt="" width="26" height="26" />
+        <div class="bar__title">
+          <strong>久坐提醒</strong>
+          <span class="hint" id="brandSub">准备中…</span>
+        </div>
+      </div>
+      <div class="bar__right">
+        <span class="chip" id="statusChip"><i></i><span id="statusText">启动中</span></span>
+        <div class="bar__actions">
+          <button class="iconbtn" id="btnSound" title="试听提示音"></button>
+          <button class="iconbtn" id="btnTheme" title="切换主题"></button>
+          <button class="iconbtn" id="btnMin" title="最小化"></button>
+          <button class="iconbtn iconbtn--close" id="btnClose" title="收进托盘"></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- 左：唯一的 raised 主视觉 + 今日分布横条 -->
+      <div class="col col--L">
+        <section class="hero glass glass--raised" id="hero">
+          <div class="hero__top">
+            <span class="eyebrow" id="phaseLabel">专注中</span>
+            <span class="hero__state" id="heroState">—</span>
+          </div>
+
+          <div class="hero__ringBox">
+            <svg class="ring" viewBox="0 0 240 240" width="240" height="240" aria-hidden="true">
+              <defs>
+                <linearGradient id="ringGradient" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#5eead4" />
+                  <stop offset="0.5" stop-color="#38bdf8" />
+                  <stop offset="1" stop-color="#a78bfa" />
+                </linearGradient>
+                <linearGradient id="ringGradientBreak" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#fcd34d" />
+                  <stop offset="1" stop-color="#fb7185" />
+                </linearGradient>
+              </defs>
+              <circle class="ring__track" cx="120" cy="120" r="104" stroke-width="9" />
+              <circle class="ring__pulse" id="ringPulse" cx="120" cy="120" r="104" stroke-width="9" />
+              <circle class="ring__value" id="ringValue" cx="120" cy="120" r="104" stroke-width="9" />
+              <circle id="ringHead" cx="120" cy="16" r="5" fill="#fff" opacity="0.9" />
+            </svg>
+            <div class="hero__center">
+              <span class="display hero__clock" id="bigClock">45:00</span>
+              <span class="hero__unit" id="clockUnit">后提醒</span>
+            </div>
+          </div>
+
+          <p class="hero__next" id="nextLine">下次提醒 —</p>
+
+          <div class="hero__acts">
+            <button class="btn btn--primary" id="btnBreakNow">
+              <span class="ic" id="nowIcon" data-icon="stand"></span><span id="nowText">现在休息</span>
+            </button>
+            <button class="btn" id="btnPause"><span class="ic" id="pauseIcon" data-icon="pause"></span><span id="pauseText">暂停</span></button>
+            <button class="btn btn--quiet btn--ico" id="btnReset" title="重新计一个完整周期"><span class="ic" data-icon="reset"></span></button>
+          </div>
+        </section>
+
+        <section class="axis glass glass--sheet">
+          <div class="axis__head">
+            <h4>今天的久坐分布</h4>
+            <span class="num" id="todayTotal">0 分钟</span>
+          </div>
+          <div class="chart" id="hourChart" role="img" aria-label="今天每小时久坐分钟数"></div>
+        </section>
+      </div>
+
+      <!-- 右：数据带 → 常用 → 抽屉 → 趋势 -->
+      <div class="col side col--R">
+        <div class="kpis">
+          <section class="kpi glass glass--flat">
+            <u>今日已坐</u>
+            <strong class="display"><span id="mSitting">0</span><em id="mSittingUnit">分钟</em></strong>
+            <div class="spark" id="kpiSpark" aria-hidden="true"></div>
+          </section>
+          <section class="kpi glass glass--flat">
+            <u>完成休息</u>
+            <strong class="display"><span id="mBreaks">0</span><em>次</em></strong>
+            <p id="mBreaksNote">—</p>
+          </section>
+          <section class="kpi glass glass--flat">
+            <u>上次休息</u>
+            <strong class="display" id="mLast">—</strong>
+            <p id="mLastNote">今天还没有</p>
+          </section>
+        </div>
+
+        <section class="card glass glass--raised">
+          <h3 class="card__t"><span class="ic" data-icon="timer"></span>提醒节奏</h3>
+
+          <div class="field">
+            <div class="row row--split">
+              <span class="label">提醒间隔</span>
+              <span class="field__val num" id="intervalVal">45 分钟</span>
+            </div>
+            <div class="seg" id="intervalSeg"></div>
+            <div class="rangeRow">
+              <span class="hint hint--num">15</span>
+              <input type="range" id="intervalRange" min="15" max="180" step="5" title="拖动可自定义 15–180 分钟" aria-label="提醒间隔分钟数" />
+              <span class="hint hint--num">180</span>
+            </div>
+          </div>
+
+          <div class="field field--row">
+            <span class="row">
+              <span class="label">每次休息</span>
+              <span class="field__val num" id="breakVal">5 分钟</span>
+            </span>
+            <div class="seg seg--right" id="breakSeg"></div>
+          </div>
+
+          <div class="field field--row">
+            <div>
+              <span class="label">「稍后」延迟</span>
+              <span class="hint">遮罩上点稍后时，过多久再来提醒</span>
+            </div>
+            <div class="stepper">
+              <button class="stepper__b" id="snoozeMinus" aria-label="减少">-</button>
+              <span class="stepper__v num" id="snoozeVal">5</span>
+              <button class="stepper__b" id="snoozePlus" aria-label="增加">+</button>
+              <span class="stepper__u">分钟</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="adv glass glass--flat" id="adv" data-open="false">
+          <div class="adv__head" id="advHead" role="button" tabindex="0" aria-expanded="false" aria-controls="advBody">
+            <h3 class="card__t card__t--plain"><span class="ic" data-icon="sparkle"></span>自动与集成</h3>
+            <span class="adv__sum">
+              <span id="advSummary">5 项 · 0 项开启</span>
+              <span class="adv__caret ic" data-icon="chevron"></span>
+            </span>
+          </div>
+          <div class="adv__body" id="advBody">
+            <div class="adv__clip">
+              <div class="adv__inner">
+                <div class="switches" id="switches"></div>
+                <div class="field field--inline" id="idleField">
+                  <div class="row row--split">
+                    <span class="label">离开多久算「不在」</span>
+                    <span class="field__val num" id="idleVal">3 分钟</span>
+                  </div>
+                  <input type="range" id="idleRange" min="1" max="30" step="1" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="week glass glass--flat">
+          <div class="axis__head axis__head--tight">
+            <h4>近 7 天</h4>
+            <span class="legend">
+              <span id="weekLegend"><i class="legend__l"></i>每日久坐分钟</span>
+              <span class="hint" id="weekHint"></span>
+            </span>
+          </div>
+          <div class="chart chart--week" id="weekChart" role="img" aria-label="近七天久坐分钟数"></div>
+        </section>
+
+        <p class="foot" id="foot"></p>
+      </div>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"><i></i><span id="toastText">已生效</span></div>
+
+    <script src="../shared/icons.js"></script>
+    <script src="../shared/format.js"></script>
+    <script src="../shared/audio.js"></script>
+    <script src="panel.js"></script>
+  </body>
+</html>

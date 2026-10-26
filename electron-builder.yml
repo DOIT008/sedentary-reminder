@@ -1,0 +1,40 @@
+appId: com.local.sedentary-reminder
+productName: 久坐提醒
+copyright: 本地使用
+
+directories:
+  buildResources: build
+
+# 只有 src 和 assets 是运行期需要的；tools 里全是验证脚本
+files:
+  - src/**/*
+  - assets/**/*
+  - package.json
+
+asar: true
+compression: maximum
+
+# 本项目不做在线更新。留空会被 electron-builder 推成 github provider，
+# 在没有 git 仓库的机器上 portable 目标会在生成 update info 时崩掉
+publish:
+  provider: generic
+  url: https://localhost/no-autoupdate/
+
+win:
+  target:
+    - nsis
+    - portable
+  icon: assets/app-512.png
+  artifactName: ${productName}-安装版-${version}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 久坐提醒
+  deleteAppDataOnUninstall: false
+
+portable:
+  artifactName: ${productName}-便携版-${version}.${ext}
